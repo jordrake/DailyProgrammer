@@ -1,7 +1,26 @@
-ul {
-    list-style: none;
+#terminal {
+    font-family: monospace;
 }
 
-li {
-    font-family: monospace;
+ul {
+    list-style: none;
+    padding: 0;
+}
+
+#passwords-container {
+    float:left;
+}
+
+#tried-words-container {
+    margin-left: 40px;
+    float: right;
+}
+
+#terminal {
+    text-align: center;
+    width: 400px;
+    margin: 0 auto 0 auto;
+    padding: 10px;
+    background-color: black;
+    color: lime;
 }

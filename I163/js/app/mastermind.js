@@ -23,7 +23,7 @@ define(['levenshtein', 'app/array-sample'], function (levenshtein) {
       this.words.splice(this.words.randomIndex(), 0, this.answer);
     }).bind(this)();
 
-    this.try = function (selectedWord) {
+    this.attempt = function (selectedWord) {
       if (this.attempts > 0) {
         if (selectedWord === this.answer) {
           this.solved = true;

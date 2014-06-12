@@ -1,5 +1,5 @@
 define(['levenshtein', 'app/array-sample'], function (levenshtein) {
-  return function Mastermind(dictionary, amount, upperLimit, lowerLimit, difficulty) {
+  return function Mastermind(dictionary, difficulty) {
 
     this.triedWords = [];
     this.words = [];
@@ -9,7 +9,7 @@ define(['levenshtein', 'app/array-sample'], function (levenshtein) {
     this.solved = false;
 
     (function () {
-      var n = 7;
+      var n = (difficulty * 2) + 3;
       var nCharWords = dictionary.filter(function (word) {
         return word.length === n;
       });
@@ -18,7 +18,7 @@ define(['levenshtein', 'app/array-sample'], function (levenshtein) {
       this.words = nCharWords.filter(function (word) {
         var distance = levenshtein(word, this.answer);
         return distance > 0 && distance < 5;
-      }.bind(this)).randomSample(9);
+      }.bind(this)).randomSample(15);
 
       this.words.splice(this.words.randomIndex(), 0, this.answer);
     }).bind(this)();

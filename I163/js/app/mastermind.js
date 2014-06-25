@@ -1,4 +1,4 @@
-define(['levenshtein', 'app/array-sample'], function (levenshtein) {
+define(['app/array-sample'], function (levenshtein) {
   return function Mastermind(dictionary, difficulty) {
 
     this.triedWords = [];
@@ -8,32 +8,22 @@ define(['levenshtein', 'app/array-sample'], function (levenshtein) {
     this.attempts = 4;
     this.solved = false;
 
-    (function () {
-      var n = (difficulty * 2) + 3;
-      var nCharWords = dictionary.filter(function (word) {
-        return word.length === n;
-      });
-
-      this.answer = nCharWords.randomElement();
-      this.words = nCharWords.filter(function (word) {
-        var distance = levenshtein(word, this.answer);
-        return distance > 0 && distance < 5;
-      }.bind(this)).randomSample(15);
-
-      this.words.splice(this.words.randomIndex(), 0, this.answer);
-    }).bind(this)();
+    this._similarity = function (wordA, wordB) {
+      var sameChars = 0;
+      for (var i = 0; i < wordA.length; i++) {
+        if (wordB[i] && wordA[i] && wordB[i] === wordA[i]) {
+          sameChars++;
+        }
+      }
+      return sameChars;
+    };
 
     this.attempt = function (selectedWord) {
       if (this.attempts > 0) {
         if (selectedWord === this.answer) {
           this.solved = true;
         } else {
-          var sameChars = 0;
-          for (var i = 0; i < selectedWord.length; i++) {
-            if (this.answer[i] && selectedWord[i] && this.answer[i] === selectedWord[i]) {
-              sameChars++;
-            }
-          }
+          var sameChars = this._similarity(selectedWord, this.answer);
           this.triedWords.push({
             word: selectedWord,
             similarity: sameChars
@@ -42,6 +32,21 @@ define(['levenshtein', 'app/array-sample'], function (levenshtein) {
           this.attempts--;
         }
       }
-    }
+    };
+
+    (function init() {
+      var n = (difficulty * 2) + 3;
+      var nCharWords = dictionary.filter(function (word) {
+        return word.length === n;
+      });
+
+      this.answer = nCharWords.randomElement();
+      this.words = nCharWords.filter(function (word) {
+        var similarity = this._similarity(word, this.answer);
+        return similarity > 2 && similarity < Math.floor(this.answer.length*0.7);
+      }.bind(this)).randomSample(15);
+
+      this.words.splice(this.words.randomIndex(), 0, this.answer);
+    }).bind(this)();
   };
 });

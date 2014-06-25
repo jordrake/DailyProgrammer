@@ -10,7 +10,13 @@ requirejs.config({
 
 requirejs(['app/oxford', 'app/mastermind'], function (oxford, Mastermind) {
   var dictionary = oxford.create('resources/enable1.txt');
-  var mm = new Mastermind(dictionary,3);
+
+  var difficultyPrompt = function () {
+    do {
+      var difficulty = window.prompt("Choose a difficulty level from 1-5");
+    } while (difficulty < 1 || difficulty > 5)
+    return difficulty;
+  };
 
   var drawList = function (list, items, cb) {
     list.innerHTML = null;
@@ -51,11 +57,12 @@ requirejs(['app/oxford', 'app/mastermind'], function (oxford, Mastermind) {
       if (!choice) {
         alert("Tough luck!");
       }
-      mm = new Mastermind(dictionary, 3);
+      mm = new Mastermind(dictionary, difficultyPrompt());
       gameLoop();
     }
   };
 
+  var mm = new Mastermind(dictionary, difficultyPrompt());
   gameLoop();
 
 });

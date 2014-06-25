@@ -35,7 +35,7 @@ define(['app/array-sample'], function (levenshtein) {
     };
 
     (function init() {
-      var n = (difficulty * 2) + 3;
+      var n = (difficulty * 2) + 4;
       var nCharWords = dictionary.filter(function (word) {
         return word.length === n;
       });
@@ -45,7 +45,7 @@ define(['app/array-sample'], function (levenshtein) {
         var similarity = this._similarity(word, this.answer);
         return similarity > 2 && similarity < Math.floor(this.answer.length*0.7);
       }.bind(this)).randomSample(15);
-
+      console.log('done');
       this.words.splice(this.words.randomIndex(), 0, this.answer);
     }).bind(this)();
   };

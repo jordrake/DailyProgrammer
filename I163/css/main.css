@@ -11,6 +11,11 @@ ul {
     float:left;
 }
 
+#passwords-container li:hover {
+    cursor: pointer;
+    text-decoration: underline;
+}
+
 #tried-words-container {
     margin-left: 40px;
     float: right;

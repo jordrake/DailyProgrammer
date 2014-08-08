@@ -11,8 +11,8 @@ requirejs.config({
 requirejs(['md5'], function (md5) {
 
     var page = {
-      avatar: document.querySelector('#avatar'),
-      username: document.querySelector('#username-input')
+        avatar: document.querySelector('#avatar'),
+        username: document.querySelector('#username-input')
     };
 
     var generateBinaryRows = function (username) {
@@ -25,23 +25,23 @@ requirejs(['md5'], function (md5) {
                     language.indexOf(md5Chars[i + 1]).toString(2)
             );
         }
-
         return binaryCodes;
     };
 
     var drawAvatar = function (binaryCodes, colors) {
         var avatarCtx = page.avatar.getContext('2d');
-        avatarCtx.fillStyle = "black";
+        var px = 8;
+
         avatarCtx.clearRect(0, 0, page.avatar.height, page.avatar.width);
 
-        var px = 8;
+        avatarCtx.fillStyle = "black";
+
         for (var y = 0; y < binaryCodes.length; y++) {
             for (var x = 0; x < 8; x++) {
 
                 if (binaryCodes[y][x] === '1') {
-
                     avatarCtx.fillRect(x * px, y * px, px, px);
-                    avatarCtx.fillRect(page.avatar.width - (x * px), y * px, px, px);
+                    avatarCtx.fillRect(page.avatar.width - (x * px), y * px, -px, px);
                 }
             }
         }

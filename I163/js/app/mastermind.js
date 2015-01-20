@@ -1,4 +1,4 @@
-define(['app/array-sample'], function (levenshtein) {
+define(['app/array-sample'], function () {
   return function Mastermind(dictionary, difficulty) {
 
     this.triedWords = [];

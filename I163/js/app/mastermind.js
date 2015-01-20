@@ -23,7 +23,7 @@ define(['app/array-sample'], function (levenshtein) {
         if (selectedWord === this.answer) {
           this.solved = true;
         } else {
-          var sameChars = this.similarity(selectedWord, this.answer);
+          var sameChars = similarity(selectedWord, this.answer);
           this.triedWords.push({
             word: selectedWord,
             similarity: sameChars
